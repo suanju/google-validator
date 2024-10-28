@@ -6,7 +6,7 @@
       <div class="i-system-uicons-minus h-6 w-6 bg-gray-500 m-2" @click="minus"></div>
 
      <div class="flex items-center justify-start ml-4 float-left flex-1">
-      <a-image width="50" :src="Logo"/>
+      <a-image width="50" :src="Logo" class="pointer-events-none select-none"/>
      </div>
     </div>
   </div>
