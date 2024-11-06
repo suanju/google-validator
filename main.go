@@ -19,7 +19,9 @@ func main() {
 	err := wails.Run(&options.App{
 		Title:     "walisapp",
 		Width:     1080,
+		MinWidth:  1080,
 		Height:    668,
+		MinHeight: 668,
 		Frameless: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,

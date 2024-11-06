@@ -8,3 +8,16 @@ body{
   margin: 0;
   padding: 0;
 }
+
+* {
+	font-family: 'ZhuZiAWan2';
+	box-sizing: border-box;
+}
+
+
+@font-face {
+	font-family: 'ZhuZiAWan2';
+	src: url('@/assets/font/ZhuZiAWan2.woff2');
+	font-weight: normal;
+	font-style: normal;
+}

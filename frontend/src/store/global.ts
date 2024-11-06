@@ -1,18 +1,30 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useglobalStore = defineStore(
+export type KeysListItem = {
+  name: string;
+  key: string;
+  keyType: string;
+}
+
+export type KeysList = Array<KeysListItem>
+
+export const useGlobalStore = defineStore(
   "global",
   () => {
-    const selectedCatalog = ref("");
+    const keysList = ref(<KeysList>[]);
+    const addKeys = (key: KeysListItem) => {
+      keysList.value.push({...key});
+    };
     return {
-        selectedCatalog,
+      keysList,
+      addKeys
     };
   },
   {
     persist: {
       storage: localStorage,
-      paths: ["selectedCatalog"],
+      paths: ["keysList"],
     },
   }
 );
