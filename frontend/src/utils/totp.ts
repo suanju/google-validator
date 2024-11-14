@@ -81,7 +81,8 @@ export async function processKeys(keys: { name: string, key: string, keyType: st
 
         result.push({
             name: item.name,
-            key: totpCode,
+            key: item.key,
+            declassify: totpCode,
             keyType: item.keyType,
             validity: validity // 添加剩余有效期字段
         });

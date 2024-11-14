@@ -2,22 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-  background-color: white ;
+body {
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   margin: 0;
   padding: 0;
 }
 
 * {
-	font-family: 'ZhuZiAWan2';
-	box-sizing: border-box;
+  font-family: "ZhuZiAWan2";
+  box-sizing: border-box;
 }
 
-
 @font-face {
-	font-family: 'ZhuZiAWan2';
-	src: url('@/assets/font/ZhuZiAWan2.woff2');
-	font-weight: normal;
-	font-style: normal;
+  font-family: "ZhuZiAWan2";
+  src: url("@/assets/font/ZhuZiAWan2.woff2");
+  font-weight: normal;
+  font-style: normal;
 }

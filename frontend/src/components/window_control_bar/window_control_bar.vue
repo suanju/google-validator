@@ -1,7 +1,7 @@
 <template>
   <div>
   
-    <div class="h-8 w-100vw flex flex-row-reverse z-36" style="-webkit-app-region: drag">
+    <div class="h-8 w-100vw flex flex-row-reverse z-36" style="--wails-draggable:drag;">
       <div class="i-system-uicons-cross h-6 w-6 bg-gray-500 m-2" @click="cross"></div>
       <div class="i-system-uicons-minus h-6 w-6 bg-gray-500 m-2" @click="minus"></div>
 
