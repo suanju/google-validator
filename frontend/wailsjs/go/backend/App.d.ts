@@ -8,4 +8,6 @@ export function DomReady(arg1:context.Context):Promise<void>;
 
 export function Init():Promise<void>;
 
+export function Screenshot():Promise<string>;
+
 export function Shutdown(arg1:context.Context):Promise<void>;

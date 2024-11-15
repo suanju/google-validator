@@ -14,6 +14,10 @@ export function Init() {
   return window['go']['backend']['App']['Init']();
 }
 
+export function Screenshot() {
+  return window['go']['backend']['App']['Screenshot']();
+}
+
 export function Shutdown(arg1) {
   return window['go']['backend']['App']['Shutdown'](arg1);
 }

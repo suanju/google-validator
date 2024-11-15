@@ -75,7 +75,6 @@ export async function processKeys(keys: { name: string, key: string, keyType: st
     const result = [];
 
     for (const item of keys) {
-        console.log(item.key)
         const totpCode = await generateTOTP(item.key);
         const validity = calculateValidity(); // 计算剩余有效期
 
