@@ -6,7 +6,6 @@
     </div>
     <!-- 添加按钮 -->
     <div class="font-sans">
-      <img class="w-18 h-18" v-if="screenshotUrl" :src="screenshotUrl" alt="Screenshot" />
       <div class="fixed right-8 bottom-8">
         <a-dropdown
           position="top"
@@ -52,6 +51,7 @@ import { ref } from "vue";
 import { IconPlus } from "@arco-design/web-vue/es/icon";
 import WindowControlBar from "@/components/window_control_bar/window_control_bar.vue";
 import { Screenshot } from "@wails/go/backend/App";
+import message from "@arco-design/web-vue/es/message";
 import AddKeys from "@/components/add_keys/add_keys.vue";
 import KeysList from "@/components/keys_list/keys_list.vue";
 
@@ -61,15 +61,16 @@ const pushButtonRotation = ref("rotate(0deg)");
 const screenshotUrl = ref("");
 
 const takeScreenshot = async () => {
-  try {
-    const screenshotPath = await Screenshot();
-    console.log(screenshotPath);
-    if (screenshotPath) {
-      screenshotUrl.value = `data:image/png;base64,${screenshotPath}`;
-    }
-  } catch (error) {
-    console.error("Error taking screenshot:", error);
-  }
+  message.error("功能暂未开放");
+  // try {
+  //   const screenshotPath = await Screenshot();
+  //   console.log(screenshotPath);
+  //   if (screenshotPath) {
+  //     screenshotUrl.value = `${screenshotPath}`;
+  //   }
+  // } catch (error) {
+  //   console.error("Error taking screenshot:", error);
+  // }
 };
 
 const handlePopupVisibleChange = (visible: boolean) => {
