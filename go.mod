@@ -4,7 +4,6 @@ go 1.21
 
 require (
 	github.com/kbinani/screenshot v0.0.0-20240820160931-a8a2c5d0e191
-	github.com/makiuchi-d/gozxing v0.1.1
 	github.com/tickstep/aliyunpan-api v0.2.1
 	github.com/wailsapp/wails/v2 v2.9.2
 )
@@ -41,7 +40,6 @@ require (
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )
 
 // replace github.com/wailsapp/wails/v2 v2.8.2 => C:\Users\25061\go\pkg\mod

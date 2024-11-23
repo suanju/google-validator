@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 export type KeysListItem = {
   name: string;
@@ -14,11 +14,17 @@ export const useGlobalStore = defineStore(
   () => {
     const keysList = ref(<KeysList>[]);
     const addKeys = (key: KeysListItem) => {
-      keysList.value.push({...key});
+      keysList.value.push({ ...key });
     };
+
+    const loading = reactive({
+      text: "截图中-请稍后 ...",
+      show: false
+    })
     return {
       keysList,
-      addKeys
+      addKeys,
+      loading
     };
   },
   {

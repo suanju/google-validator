@@ -49,8 +49,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { IconPlus } from "@arco-design/web-vue/es/icon";
-import WindowControlBar from "@/components/window_control_bar/window_control_bar.vue";
 import { Screenshot } from "@wails/go/backend/App";
+import { useGlobalStore } from "@/store/global";
+import { WindowHide, WindowShow } from "@wails/runtime/runtime";
+import WindowControlBar from "@/components/window_control_bar/window_control_bar.vue";
 import message from "@arco-design/web-vue/es/message";
 import AddKeys from "@/components/add_keys/add_keys.vue";
 import KeysList from "@/components/keys_list/keys_list.vue";
@@ -58,19 +60,23 @@ import KeysList from "@/components/keys_list/keys_list.vue";
 const homeRef = ref();
 const addKeysVisible = ref(false);
 const pushButtonRotation = ref("rotate(0deg)");
-const screenshotUrl = ref("");
+const loading = useGlobalStore().loading;
 
 const takeScreenshot = async () => {
-  message.error("功能暂未开放");
-  // try {
-  //   const screenshotPath = await Screenshot();
-  //   console.log(screenshotPath);
-  //   if (screenshotPath) {
-  //     screenshotUrl.value = `${screenshotPath}`;
-  //   }
-  // } catch (error) {
-  //   console.error("Error taking screenshot:", error);
-  // }
+  try {
+    loading.show = true;
+    WindowHide();
+    const screenshotPath = await Screenshot();
+    const imageUrl = `data:image/png;base64,${screenshotPath}`;
+    console.log(imageUrl);
+    message.success("截图成功");
+  } catch (error) {
+    message.error("截图失败");
+    console.error("Error taking screenshot:", error);
+  } finally {
+    loading.show = false;
+    WindowShow();
+  }
 };
 
 const handlePopupVisibleChange = (visible: boolean) => {

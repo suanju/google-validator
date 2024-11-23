@@ -1,12 +1,13 @@
 package backend
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
 	"fmt"
+	"image/png"
 
 	sr "github.com/kbinani/screenshot"
-	"github.com/makiuchi-d/gozxing"
-	"github.com/makiuchi-d/gozxing/qrcode"
 )
 
 // App struct
@@ -38,41 +39,25 @@ func (a *App) DomReady(ctx context.Context) {
 
 }
 
-// 二维码功能
 func (a *App) Screenshot() (string, error) {
-	code := ""
-	// 获取所有屏幕的矩形区域
+	// 检查屏幕数量
 	n := sr.NumActiveDisplays()
 	if n <= 0 {
-		return code, fmt.Errorf("no active displays found")
+		return "", fmt.Errorf("截图出现错误")
 	}
 
-	// 选择主屏幕进行截图
+	// 捕获主屏幕截图
 	img, err := sr.CaptureDisplay(0)
 	if err != nil {
-		return code, err
+		return "", err
 	}
 
-	if err != nil {
-		fmt.Println("Error decoding image:", err)
-		return code, err
+	// 将图片编码为 PNG 并转为 Base64
+	buffer := new(bytes.Buffer)
+	if err := png.Encode(buffer, img); err != nil {
+		return "", fmt.Errorf("error encoding image: %v", err)
 	}
 
-	// 将图片转换为 BinaryBitmap
-	bmp, err := gozxing.NewBinaryBitmapFromImage(img)
-	if err != nil {
-		fmt.Println("Error creating binary bitmap:", err)
-		return code, err
-	}
-
-	// 使用二维码解码器
-	reader := qrcode.NewQRCodeReader()
-	result, err := reader.Decode(bmp, nil)
-	if err != nil {
-		fmt.Println("Error decoding QR code:", err)
-		return code, err
-	}
-	code = result.String()
-
-	return code, nil
+	base64Image := base64.StdEncoding.EncodeToString(buffer.Bytes())
+	return base64Image, nil
 }
