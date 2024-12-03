@@ -4,25 +4,25 @@ export function base32Decode(base32: string): Uint8Array {
     let result: number[] = [];
     let buffer = 0;
     let bitsLeft = 0;
-  
+
     // 遍历Base32编码字符串
     for (let i = 0; i < base32.length; i++) {
-      let value = base32Chars.indexOf(base32[i].toUpperCase());
-      if (value === -1) continue; // 忽略非Base32字符
-      buffer = (buffer << 5) | value;
-      bitsLeft += 5;
-      if (bitsLeft >= 8) {
-        bitsLeft -= 8;
-        result.push((buffer >>> bitsLeft) & 0xFF);
-      }
+        let value = base32Chars.indexOf(base32[i].toUpperCase());
+        if (value === -1) continue; // 忽略非Base32字符
+        buffer = (buffer << 5) | value;
+        bitsLeft += 5;
+        if (bitsLeft >= 8) {
+            bitsLeft -= 8;
+            result.push((buffer >>> bitsLeft) & 0xFF);
+        }
     }
-  
+
     const decoded = new Uint8Array(result);
     if (decoded.length === 0) {
-      throw new Error("Decoded key is empty.");
+        throw new Error("Decoded key is empty.");
     }
     return decoded;
-  }
+}
 
 // HMAC-SHA1 生成 TOTP，返回HMAC签名（Uint8Array类型）
 export async function hmacSha1(key: Uint8Array, data: Uint8Array): Promise<Uint8Array> {
@@ -88,4 +88,28 @@ export async function processKeys(keys: { name: string, key: string, keyType: st
     }
 
     return result;
+}
+
+type OTPAuthResult = {
+    name: string;
+    key: string;
+};
+
+export const parseOTPAuth = (strings: string[]) => {
+    const otpArr: OTPAuthResult[] = [];
+    const otpAuthRegex = /otpauth:\/\/totp\/([^?]+)\?secret=([\w]+)/;
+    for (const str of strings) {
+        const match = otpAuthRegex.exec(str);
+        if (match) {
+            otpArr.push({
+                name: match[1],
+                key: match[2],
+            });
+        }
+    }
+
+    return {
+        otpArr,
+        hasMatch: otpArr.length > 0,
+    };
 }

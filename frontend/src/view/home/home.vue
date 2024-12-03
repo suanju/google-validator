@@ -49,15 +49,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { IconPlus } from "@arco-design/web-vue/es/icon";
-import { Screenshot } from "@wails/go/backend/App";
-import { useGlobalStore } from "@/store/global";
+import { ScreenshotRecognize } from "@wails/go/backend/App";
+import { useGlobalStore, type KeysListItem } from "@/store/global";
 import { WindowHide, WindowShow } from "@wails/runtime/runtime";
+import { parseOTPAuth } from "@/utils/totp";
 import WindowControlBar from "@/components/window_control_bar/window_control_bar.vue";
 import message from "@arco-design/web-vue/es/message";
 import AddKeys from "@/components/add_keys/add_keys.vue";
 import KeysList from "@/components/keys_list/keys_list.vue";
 
 const homeRef = ref();
+const globalStore = useGlobalStore()
 const addKeysVisible = ref(false);
 const pushButtonRotation = ref("rotate(0deg)");
 const loading = useGlobalStore().loading;
@@ -66,12 +68,25 @@ const takeScreenshot = async () => {
   try {
     loading.show = true;
     WindowHide();
-    const screenshotPath = await Screenshot();
-    const imageUrl = `data:image/png;base64,${screenshotPath}`;
-    console.log(imageUrl);
-    message.success("截图成功");
+    //阻塞一会防止还没收起窗口
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    const resp = await ScreenshotRecognize();
+    const { otpArr, hasMatch } = parseOTPAuth(resp);
+    if (!hasMatch) {
+      message.error("未检出到验证器相关二维码~");
+      return;
+    }
+    otpArr.forEach(item => {
+      globalStore.addKeys(<KeysListItem>{
+        name: item.name,
+        key: item.key,
+        keyType: "time",
+      });
+    });
+    console.log(resp, otpArr);
+    message.success("识别成功");
   } catch (error) {
-    message.error("截图失败");
+    message.error("识别失败,可能当前屏幕中不包含二维码~");
     console.error("Error taking screenshot:", error);
   } finally {
     loading.show = false;

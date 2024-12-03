@@ -14,8 +14,8 @@ export function Init() {
   return window['go']['backend']['App']['Init']();
 }
 
-export function Screenshot() {
-  return window['go']['backend']['App']['Screenshot']();
+export function ScreenshotRecognize() {
+  return window['go']['backend']['App']['ScreenshotRecognize']();
 }
 
 export function Shutdown(arg1) {

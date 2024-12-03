@@ -4,6 +4,8 @@ go 1.21
 
 require (
 	github.com/kbinani/screenshot v0.0.0-20240820160931-a8a2c5d0e191
+	github.com/liyue201/goqr v0.0.0-20200803022322-df443203d4ea
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/tickstep/aliyunpan-api v0.2.1
 	github.com/wailsapp/wails/v2 v2.9.2
 )
